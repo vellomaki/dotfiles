@@ -45,7 +45,7 @@ in
     fzf
     lazygit
     mkvtoolnix
-    qbittorrent
+    # qbittorrent
     subs2cia
     wget
   ];
