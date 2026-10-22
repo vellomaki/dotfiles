@@ -67,6 +67,7 @@ in
   programs.java.enable = true;
   programs.vscode.enable = false;
   services.dock.enable = true;
+  programs.neovim.enable = true;
 
   # TODO: get a Nix devenv going
   # and make it automatically initiate in ~/.nix (and other places)

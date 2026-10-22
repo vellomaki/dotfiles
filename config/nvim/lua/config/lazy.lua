@@ -1,21 +1,34 @@
------ LazyVim Setup -----
+-- local M = {}
+
+-- function M.setup(args)
+--local hm_pluginFarm = args.hm_pluginFarm
+--local hm_installed = args.hm_installed
+
 require("lazy").setup({
   spec = {
-    -- add LazyVim and import its plugins
+    -- lazyvim.plugins should be loaded frst
     { "LazyVim/LazyVim", import = "lazyvim.plugins" },
-
-    -- import/override with your plugins
     { import = "plugins" },
   },
 
+  dev = {
+    path = function(plugin)
+      -- Already downloaded plugins with Home Manager
+      for _, plug in ipairs(args.hm_installed or {}) do
+        if plug == plugin.name then
+          print(args.hm_pluginFarm .. plugin.name)
+          return args.hm_pluginFarm .. "/" .. plugin.name
+        end
+      end
+      return "~/projects" .. plugin.name
+    end,
+    patterns = { "" },
+    fallback = true,
+  },
+
   defaults = {
-    -- By default, only LazyVim plugins will be lazy-loaded. Your custom plugins will load during startup.
-    -- If you know what you're doing, you can set this to `true` to have all your custom plugins lazy-loaded by default.
     lazy = false,
-    -- It's recommended to leave version=false for now, since a lot the plugin that support versioning,
-    -- have outdated releases, which may break your Neovim install.
     version = false, -- always use the latest git commit
-    -- version = "*", -- try installing the latest stable version for plugins that support semver
   },
 
   -- automatically check for plugin updates --
@@ -37,3 +50,6 @@ require("lazy").setup({
     },
   },
 })
+--end
+
+-- return M
