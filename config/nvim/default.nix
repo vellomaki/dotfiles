@@ -71,25 +71,8 @@ in
 
       plugins = with pkgs.vimPlugins; [ lazy-nvim ];
       initLua = /* lua */ ''
-        -- https://stackoverflow.com/a/11130774/16755079
-        -- dir_abs_path:string -> file_name:string[]
-        -- list file names in the directory
-        local function scandir(directory)
-          local i, t, popen = 0, {}, io.popen
-          -- Nix stdenv provides GNU coreutils
-          -- GNU coreutils provides ls
-          local pfile = popen('ls -A "' .. directory .. '"')
-          for filename in pfile:lines() do
-            i = i + 1
-            t[i] = filename
-          end
-          pfile:close()
-          return t
-        end
-
         args = {}
         args.hm_pluginFarm = "${pluginFarm}"
-        args.hm_installed = scandir(args.hm_pluginFarm)
         require('config.lazy')
         -- require('config.lazy').setup({hm_pluginFarm = hm_pluginFarm, hm_installed = scandir(hm_pluginFarm)})
       '';

@@ -1,4 +1,7 @@
-{ lib, pkgs }:
+{
+  lib,
+  pkgs,
+}:
 with pkgs.vimPlugins;
 let
   # Some pkgs's names don't match the lazy.nvim name so we have to marry the two
@@ -9,6 +12,19 @@ let
   catppuccin = {
     name = "catppuccin";
     path = catppuccin-nvim;
+  };
+  luasnip-latex-snippets-nvim = pkgs.vimUtils.buildVimPlugin {
+    name = "luasnip-latex-snippets.nvim";
+    src = pkgs.fetchFromGitHub {
+      owner = "iurimateus";
+      repo = "luasnip-latex-snippets.nvim";
+      rev = "84d37a68b5858bafe75573f8ea6898ba095fef45";
+      hash = "sha256-X6Ea16z5sxjJpKcI3xCQkYOdlTKttntj4vNhQHqWQC8=";
+    };
+    dependencies = [
+      luasnip
+      vimtex
+    ];
   };
 
   # NOTE: these are structures [required] ++ [optional]
@@ -82,6 +98,19 @@ let
     trouble-nvim
     which-key-nvim
   ];
+  lazyvim.plugins.extras.lang =
+    map
+      (l: {
+        name = "lazyvim.plugins.extras.lang.${l}";
+        path = LazyVim + /lua/lazyvim/plugins/extras/lang + "/${l}"; # h
+      })
+      [
+        "markdown"
+        "nix"
+        "python"
+        "rust"
+        "tex"
+      ];
   lazyVim.plugins.formatting = [
     conform-nvim
     mason-nvim
@@ -122,6 +151,7 @@ let
   ++ lazyVim.plugins.coding
   ++ lazyVim.plugins.colorscheme
   ++ lazyVim.plugins.editor
+  ++ lazyvim.plugins.extras.lang
   ++ lazyVim.plugins.formatting
   ++ lazyVim.plugins.linting
   ++ lazyVim.plugins.lsp
