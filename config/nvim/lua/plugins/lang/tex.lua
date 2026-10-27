@@ -1,6 +1,4 @@
 return {
-  { "LazyVim/LazyVim", import = "lazyvim.plugins.extras.lang.tex" },
-
   --- Optionals
   { "neovim/nvim-lspconfig" },
 

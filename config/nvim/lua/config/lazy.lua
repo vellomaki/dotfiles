@@ -39,19 +39,39 @@ local function inPaths(plugin, paths)
   end
 end
 
+local spec = {
+  { "LazyVim/LazyVim", import = "lazyvim.plugins" },
+  { import = "plugins" },
+}
+
+local langs = {
+  { import = "lazyvim.plugins.extras.lang.markdown" },
+  { import = "lazyvim.plugins.extras.lang.nix" },
+  { import = "lazyvim.plugins.extras.lang.python" },
+  { import = "lazyvim.plugins.extras.lang.rust" },
+  { import = "lazyvim.plugins.extras.lang.tex" },
+}
+
+local i = 0
+for j, l in pairs(langs) do
+  table.insert(spec, j + 1, l)
+  i = i + 1
+end
+
+for _, v in ipairs(args.hm.spec or {}) do
+  local j, x = next(v)
+  table.insert(spec, j + i, x)
+end
+
 require("lazy").setup({
-  spec = {
-    -- lazyvim.plugins should be loaded frst
-    { "LazyVim/LazyVim", import = "lazyvim.plugins" },
-    { import = "plugins" },
-  },
+  spec = spec,
 
   dev = {
-    path = args.hm_pluginFarm, --function(plugin)
+    path = args.hm.pluginFarm, --function(plugin)
     -- Already downloaded plugins with Home Manager
     --return inPaths(plugin, { args.hm_pluginFarm }) or ("~/projects" .. plugin.name)
     --end,
-    patterns = { "" },
+    patterns = { "." },
     fallback = true,
   },
 

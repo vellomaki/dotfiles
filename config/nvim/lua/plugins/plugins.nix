@@ -4,7 +4,7 @@
 }:
 with pkgs.vimPlugins;
 let
-  # Some pkgs's names don't match the lazy.nvim name so we have to marry the two
+  # Some pkgs's names don't match the lazy.nvim name so we have to marry the twos
   LuaSnip = {
     name = "LuaSnip";
     path = luasnip;
@@ -30,7 +30,7 @@ let
   # NOTE: these are structures [required] ++ [optional]
   lazyVim.lang.markdown = [
     markdown-preview-nvim
-    mason-nvim
+    # mason-nvim
     nvim-lspconfig
     render-markdown-nvim
   ]
@@ -58,7 +58,7 @@ let
     neotest
     nvim-cmp
     nvim-dap
-    mason-nvim-dap-nvim
+    # mason-nvim-dap-nvim
   ];
   lazyVim.lang.rust = [
     crates-nvim
@@ -67,7 +67,7 @@ let
     rustaceanvim
   ]
   ++ [
-    mason-nvim
+    # mason-nvim
     neotest
   ];
   lazyVim.lang.tex = [
@@ -113,12 +113,12 @@ let
       ];
   lazyVim.plugins.formatting = [
     conform-nvim
-    mason-nvim
+    # mason-nvim
   ];
   lazyVim.plugins.linting = [ nvim-lint ];
   lazyVim.plugins.lsp = [
-    mason-lspconfig-nvim
-    mason-nvim
+    # mason-lspconfig-nvim
+    # mason-nvim
     nvim-lspconfig
   ];
   lazyVim.plugins.treesitter = [
